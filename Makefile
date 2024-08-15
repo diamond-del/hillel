@@ -4,3 +4,12 @@ run:
 	echo '11111'
 	@echo '2222'
 	python main.py
+
+
+.PHONY: check
+check:
+	@echo 'Starting code correction...'
+	black .
+	isort .
+	flake8 .
+	@echo 'Finish'
