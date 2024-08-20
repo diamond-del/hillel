@@ -11,5 +11,6 @@ check:
 	@echo 'Starting code correction...'
 	black .
 	isort .
+	pytest .
 	flake8 .
 	@echo 'Finish'
