@@ -1,51 +1,22 @@
-from abc import ABC, abstractmethod
+def filter_strings(func):
+    def wrapper(*args, **kwargs):
+        result = func(*args, **kwargs)
+        if isinstance(result, list):
+            result = [item for item in result if not isinstance(item, str)]
+        return result
+
+    return wrapper
 
 
-class LibraryItem(ABC):
-    def __init__(self, title, author_or_director, year):
-        self.title = title
-        self.author_or_director = author_or_director
-        self.year = year
-
-    @abstractmethod
-    def description(self):
-        return f"Title: {self.title}, Author/Director: {self.author_or_director}, Year: {self.year}"
+@filter_strings
+def example_function():
+    return [1, "Hlsad  al", 3.14, "qweqwads ", 42, "asdadasd", "EQewE"]
 
 
-class Book(LibraryItem):
-    def __init__(self, title, author, year, number_of_pages):
-        super().__init__(title, author, year)
-        self.number_of_pages = number_of_pages
-
-    def description(self):
-        base_description = super().description()
-        return f"{base_description}, Pages: {self.number_of_pages}"
+@filter_strings
+def example_non_list():
+    return "Its not a list"
 
 
-class Magazine(LibraryItem):
-    def __init__(self, title, author_or_director, year, issue_number):
-        super().__init__(title, author_or_director, year)
-        self.issue_number = issue_number
-
-    def description(self):
-        base_description = super().description()
-        return f"{base_description}, Issue Number: {self.issue_number}"
-
-
-class DVD(LibraryItem):
-    def __init__(self, title, director, year, duration):
-        super().__init__(title, director, year)
-        self.duration = duration
-
-    def description(self):
-        base_description = super().description()
-        return f"{base_description}, Duration: {self.duration} minutes"
-
-
-book = Book("Python Programming", "John Doe", 2022, 350)
-magazine = Magazine("Tech Today", "Jane Smith", 2023, 42)
-dvd = DVD("Inception", "Christopher Nolan", 2010, 148)
-
-print(book.description())
-print(magazine.description())
-print(dvd.description())
+print(example_function())
+print(example_non_list())
